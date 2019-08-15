@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	 <script type="text/javascript" src="jquery-3.2.1.min.js" ></script>
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	#wrap{
+		height: 300px;
+		width: 300px;
+		position: absolute;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin: auto;
+		border: 1px solid red;
+		perspective: 400px;
+		background-color: gainsboro;
+	}
+	.box{
+		width: 200px;
+		height: 200px;
+		transition: 3s;
+		position:absolute;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin: auto;	
+		transition: 3s transform;
+		transform-style: preserve-3d;
+	}
+	.box > div{
+		width: 200px;
+		height: 200px;
+		position: absolute;
+		font-size: 80px;
+		text-align: center;
+		line-height: 200px;
+		background:rgb(123, 34, 231,0.1);
+        border: 1px solid rebeccapurple;
+		/*backface-visibility: hidden;*/
+	}
+	/* .box:hover{
+		transform: rotateY(60deg);
+	} */
+	
+	.boxfix{
+		transform: rotateY(60deg);
+	}
+    </style>
+    
+    <script>
+        window.onload=function(){
+            createN(6);
+        function createN(n){
+            var BoxNode=document.querySelector(".box");
+            var StyleNode=document.createElement("style");
+            var DegOut=360/n;//外角
+            var DegIn=180-360/n;//内角
+            var text="";
+            var cssText="";
+            for(i=0;i<n;i++){
+                text+="<div>"+(i+1)+"</div>";
+                cssText+="#wrap >.box > div:nth-child("+(i+1)+"){transform: rotateY("+(i*DegOut)+"deg);}";
+            }
+            BoxNode.innerHTML=text;
+            var mianNode=document.querySelector(".box > div");
+            var length=mianNode.offsetWidth;
+            cssText+="#wrap > .box{transform-origin: center center -"+(length/2*Math.tan((DegIn/2)*Math.PI/180))+"px;}";
+            cssText+="#wrap > .box > div{transform-origin: center center -"+(length/2*Math.tan((DegIn/2)*Math.PI/180))+"px;}";
+            StyleNode.innerHTML=cssText;
+            document.head.appendChild(StyleNode);
+        }
+		
+        }
+    </script>
+</head>
+<body>
+	<div id="wrap">
+		<div class="box">
+		</div>
+    </div>
+	<script>
+	　　$(function(){
+	　　　　$("#wrap").click(function(){
+	　　　　　　　　$(".box").addClass("boxfix");
+	　　　　})
+	　　})
+	</script>
+</body>
+</html>
